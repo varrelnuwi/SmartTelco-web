@@ -28,7 +28,11 @@ body {
   border-radius: 6px;
   padding: 6px 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: left 0.3s ease;
+}
+
+.sidebar.active ~ .sidebar-toggle {
+  left: 260px; /* geser sejauh lebar sidebar */
 }
 
 .sidebar-toggle:hover {
@@ -150,12 +154,12 @@ body::before {
 
 /* === HEADER === */
 header {
-  background: linear-gradient(90deg, #f5daa7, #842a3b);
+  background: linear-gradient(90deg, #842a3b , #f5daa7 );
   color: white;
   padding: 0.8rem 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: right;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   height: 70px; /* tinggi header agar logo muat sempurna */
   position: fixed;       /* tetap di atas layar */

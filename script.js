@@ -203,7 +203,7 @@ new Chart(ctxActivity, {
 
 
 const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebarToggle');
+const toggleBtn = document.getElementById('sidebarToggle');
 const mainContent = document.querySelector('main');
 
 sidebarToggle.addEventListener('click', () => {
