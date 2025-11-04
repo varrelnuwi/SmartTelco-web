@@ -32,29 +32,55 @@
       </div>
     </section>
 
+    
     <h2 class="section-title">Menu Cepat</h2>
     <section class="action-grid">
       <div class="grid-item"><div class="icon">🛒</div><div>Beli Paket</div></div>
       <div class="grid-item"><div class="icon">📱</div><div>Isi Pulsa</div></div>
-      <div class="grid-item"><div class="icon">📊</div><div>Cek Kuota</div></div>
       <div class="grid-item"><div class="icon">🧾</div><div>Riwayat</div></div>
       <div class="grid-item"><div class="icon">🎁</div><div>Promo</div></div>
-      <div class="grid-item"><div class="icon">💳</div><div>Bayar Tagihan</div></div>
-      <div class="grid-item"><div class="icon">🎮</div><div>Voucher Game</div></div>
       <div class="grid-item"><div class="icon">💬</div><div>Bantuan</div></div>
     </section>
 
-    <h2 class="section-title">Statistik Penggunaan</h2>
-    <section class="chart-container">
-      <div class="chart-box">
-        <h4>Distribusi Aktivitas</h4>
-        <canvas id="activityChart"></canvas>
-      </div>
-      <div class="chart-box">
-        <h4>Sisa Kuota (Paket Utama)</h4>
-        <canvas id="dataUsageChart"></canvas>
-      </div>
-    </section>
+   <h2 class="section-title">Statistik Penggunaan</h2>
+
+<section class="usage-card">
+  <div class="usage-info">
+    <h3>Paket Aktif: <span id="activePackage">Streaming Max</span></h3>
+    <p><strong>Sisa Kuota:</strong> <span id="remainingData">5 GB</span> dari 50 GB</p>
+    <p><strong>Masa Aktif:</strong> <span id="expiryDate">12 Desember 2025</span></p>
+    <p><strong>Status:</strong> Aktif ✅</p>
+    <p><strong>Total Penggunaan:</strong> <span id="usagePercent">90%</span></p>
+    <button class="renew-btn">Perpanjang Paket</button>
+  </div>
+
+  <div class="usage-chart">
+    <canvas id="dataDonutChart"></canvas>
+  </div>
+
+  <div class="usage-chart">
+  <canvas id="dataDonutChart"></canvas>
+</div>
+
+</section>
+
+<h2 class="section-title">Distribusi Penggunaan Paket</h2>
+
+<section class="usage-card">
+  <div class="usage-info">
+    <h3>Distribusi Aktivitas</h3>
+    <p><strong>Video:</strong> 60%</p>
+    <p><strong>TELP:</strong> 25%</p>
+    <p><strong>SMS:</strong> 15%</p>
+    <p style="margin-top: 10px;">Data ini menggambarkan jenis aktivitas yang paling sering Anda lakukan menggunakan paket data Anda.</p>
+  </div>
+
+  <div class="usage-chart">
+    <canvas id="activityDonutChart"></canvas>
+  </div>
+</section>
+
+
 
     <h2 class="section-title">Paket Pilihan Untuk Anda</h2>
     <div class="package-list-wrapper">
