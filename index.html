@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartNet - Rekomendasi (Silinder 3D)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <header class="app-header">
+  <img src="images/logo smarttelco.png" alt="SmartTelco Logo" class="app-logo" />
+</header>
+
+
+
+
+  <main>
+    <section class="status-card">
+      <div class="user-info">
+        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User Photo">
+        <div>
+          <h3 id="user-name">Memuat...</h3>
+          <p>Pelanggan sejak 2023</p>
+        </div>
+      </div>
+      <div class="quota-info">
+        <p>Sisa Kuota Utama</p>
+        <div class="data-amount" id="dataUsage">-- GB</div>
+        <div class="data-detail" id="usage"></div>
+      </div>
+    </section>
+
+    <h2 class="section-title">Menu Cepat</h2>
+    <section class="action-grid">
+      <div class="grid-item"><div class="icon">🛒</div><div>Beli Paket</div></div>
+      <div class="grid-item"><div class="icon">📱</div><div>Isi Pulsa</div></div>
+      <div class="grid-item"><div class="icon">📊</div><div>Cek Kuota</div></div>
+      <div class="grid-item"><div class="icon">🧾</div><div>Riwayat</div></div>
+      <div class="grid-item"><div class="icon">🎁</div><div>Promo</div></div>
+      <div class="grid-item"><div class="icon">💳</div><div>Bayar Tagihan</div></div>
+      <div class="grid-item"><div class="icon">🎮</div><div>Voucher Game</div></div>
+      <div class="grid-item"><div class="icon">💬</div><div>Bantuan</div></div>
+    </section>
+
+    <h2 class="section-title">Statistik Penggunaan</h2>
+    <section class="chart-container">
+      <div class="chart-box">
+        <h4>Distribusi Aktivitas</h4>
+        <canvas id="activityChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h4>Sisa Kuota (Paket Utama)</h4>
+        <canvas id="dataUsageChart"></canvas>
+      </div>
+    </section>
+
+    <h2 class="section-title">Paket Pilihan Untuk Anda</h2>
+    <div class="package-list-wrapper">
+      <section class="package-list" id="package-list"></section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
