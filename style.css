@@ -15,6 +15,127 @@ body {
   overflow-x: hidden;
 }
 
+/* Tombol toggle */
+.sidebar-toggle {
+  position: fixed;
+  top: 80px;
+  left: 15px;
+  z-index: 1100;
+  background: #842a3b;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  background: #a63b50;
+}
+
+/* Sidebar utama */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1rem;
+  z-index: 1000;
+  transition: transform 0.4s ease;
+}
+
+/* Saat sidebar di-collapse */
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+/* Konten utama agar tidak tertutup sidebar */
+  main {
+  margin-left: 0;
+  transition: margin-left 0.4s ease;
+}
+
+
+/* Saat sidebar collapse, geser konten */
+body.sidebar-open main {
+  margin-left: 250px;
+}
+
+/* Bagian profile */
+.profile {
+  text-align: center;
+}
+
+.profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #842a3b;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.username {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+}
+
+.status {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Info cepat */
+.quick-info {
+  margin-top: 1.5rem;
+}
+
+.quick-info h4 {
+  margin-bottom: 0.8rem;
+  color: #842a3b;
+  font-size: 1rem;
+}
+
+.quick-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quick-info li {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Tombol keluar */
+.logout-btn {
+  width: 100%;
+  padding: 0.6rem;
+  background: #ef4444;
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+
 /* lapisan blur di atas gambar */
 body::before {
   content: "";

@@ -200,3 +200,13 @@ new Chart(ctxActivity, {
     },
   },
 });
+
+
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const mainContent = document.querySelector('main');
+
+sidebarToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+  mainContent.classList.toggle('shifted');
+});
