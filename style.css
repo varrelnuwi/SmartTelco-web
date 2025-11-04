@@ -6,9 +6,26 @@
 }
 body {
   margin: 0;
-  background: #f0f4f8;
-  color: #333;
+  padding: 0;
+  min-height: 100vh;
+  background: url("images/BG.jpg") center/cover no-repeat fixed;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  color: #000000;
+  overflow-x: hidden;
 }
+
+/* lapisan blur di atas gambar */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: inherit;         /* gunakan background yang sama */
+  filter: blur(8px);           /* efek blur */
+  transform: scale(1.1);       /* sedikit diperbesar agar blur halus */
+  z-index: -1;                 /* biar di belakang semua elemen */
+}
+
 
 /* === HEADER === */
 header {
@@ -20,6 +37,11 @@ header {
   justify-content: flex-start;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   height: 70px; /* tinggi header agar logo muat sempurna */
+  position: fixed;       /* tetap di atas layar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;  
 }
 
 .app-logo {
@@ -39,15 +61,127 @@ header {
 
 
 
+/* === USAGE STATISTIC CARD === */
+.usage-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.usage-info {
+  flex: 1;
+  min-width: 250px;
+  color: #1e3a8a;
+}
+
+.usage-info h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #842a3b;
+}
+
+.usage-info p {
+  margin: 0.4rem 0;
+  font-size: 0.9rem;
+}
+
+.renew-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.renew-btn:hover {
+  background: #1e40af;
+}
+
+.usage-chart {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.usage-chart canvas {
+  width: 180px;
+  height: 180px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .usage-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .usage-chart {
+    margin-top: 1rem;
+  }
+}
+
+/* Label Pilihan Terbaik */
+.package-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.package-item.is-recommended {
+  border: 2px solid gold;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.best-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(90deg, #ffd700, #fff4b2);
+  color: #4a2c00;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444, #22c55e);
+  width: 0;
+  border-radius: 10px;
+  transition: width 1s ease-out;
+}
 
 
 
 
 /* === MAIN === */
 main {
-  padding: 1rem;
   background: #ffffff;
   overflow-x: hidden;
+  margin-top: 120px;
 }
 
 /* === STATUS CARD === */

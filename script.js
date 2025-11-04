@@ -13,27 +13,57 @@ const allPackageOptions = [
   { name: "Paket Harian Cepat", price: "Rp 25.000", data: "10GB 1 Hari", desc: "Untuk kebutuhan instan seharian penuh." }
 ];
 
+// === Personalisasi Otomatis Berdasarkan Data Pengguna ===
+function personalizePackages(user) {
+  // Reset semua paket
+  allPackageOptions.forEach(pkg => pkg.isRecommended = false);
+
+  // Tentukan rekomendasi berdasarkan perilaku
+  if (user.usage.video > 50) {
+    markRecommended("Paket Streaming Max");
+  } else if (user.usage.call > 40) {
+    markRecommended("Paket Premium Unlimited");
+  } else if (user.usage.sms > 30) {
+    markRecommended("Paket Hemat Bulanan");
+  } else {
+    markRecommended("Paket Harian Cepat");
+  }
+}
+
+function markRecommended(packageName) {
+  const pkg = allPackageOptions.find(p => p.name === packageName);
+  if (pkg) pkg.isRecommended = true;
+}
+
+// Jalankan personalisasi otomatis
+personalizePackages(userData);
+
+
 window.onload = () => {
   document.getElementById("user-name").textContent = userData.nama;
   document.getElementById("dataUsage").textContent = `${50 - userData.dataUsage} GB`; 
   document.getElementById("usage").textContent = `Terpakai: ${userData.dataUsage} dari 50 GB`;
 
   const carousel = document.getElementById('package-list');
-  allPackageOptions.forEach(pkg => {
-    const item = document.createElement('div');
-    item.className = 'package-item';
-    if (pkg.isRecommended) item.classList.add('is-recommended');
-    item.innerHTML = `
-      <div class="details">
-        <h4>${pkg.name}</h4>
-        <p>${pkg.data}</p>
-        <p class="price">${pkg.price}/bulan</p>
-        <p style="font-size: 0.8rem; margin-top: 8px;">${pkg.desc}</p>
-      </div>
-      <button class="buy-btn">${pkg.isRecommended ? 'Pilih Paket Ini' : 'Lihat Detail'}</button>
-    `;
-    carousel.appendChild(item);
-  });
+allPackageOptions.forEach(pkg => {
+  const item = document.createElement('div');
+  item.className = 'package-item';
+  if (pkg.isRecommended) item.classList.add('is-recommended');
+
+  // tambahkan label "⭐ Pilihan Terbaik" kalau isRecommended = true
+  item.innerHTML = `
+    ${pkg.isRecommended ? `<div class="best-label">⭐ Pilihan Terbaik</div>` : ""}
+    <div class="details">
+      <h4>${pkg.name}</h4>
+      <p>${pkg.data}</p>
+      <p class="price">${pkg.price}/bulan</p>
+      <p style="font-size: 0.8rem; margin-top: 8px;">${pkg.desc}</p>
+    </div>
+    <button class="buy-btn">${pkg.isRecommended ? 'Pilih Paket Ini' : 'Lihat Detail'}</button>
+  `;
+  carousel.appendChild(item);
+});
+
 
   const items = carousel.querySelectorAll('.package-item');
   const itemCount = items.length;
@@ -102,3 +132,71 @@ window.onload = () => {
 
   setupCarousel();
 };
+
+// === DONUT CHART: Sisa Paket ===
+const totalKuota = 50;
+const terpakai = 45;
+const sisa = totalKuota - terpakai;
+
+const ctxDonut = document.getElementById("dataDonutChart").getContext("2d");
+new Chart(ctxDonut, {
+  type: "doughnut",
+  data: {
+    labels: ["Terpakai", "Sisa Kuota"],
+    datasets: [{
+      data: [terpakai, sisa],
+      backgroundColor: ["#ef4444", "#22c55e"], // merah = terpakai, hijau = sisa
+      borderWidth: 2,
+      hoverOffset: 10,
+    }],
+  },
+  options: {
+    cutout: "70%", // ini yang bikin jadi donut
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          color: "#333",
+          font: { size: 12 }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.label}: ${context.parsed} GB`,
+        },
+      },
+    },
+  },
+});
+
+// === DONUT CHART: Distribusi Penggunaan Paket ===
+const ctxActivity = document.getElementById("activityDonutChart").getContext("2d");
+new Chart(ctxActivity, {
+  type: "doughnut",
+  data: {
+    labels: ["Video", "TELP", "SMS"],
+    datasets: [{
+      data: [60, 25, 15],
+      backgroundColor: ["#3b82f6", "#facc15", "#a855f7"],
+      borderWidth: 2,
+      hoverOffset: 10,
+    }],
+  },
+  options: {
+    cutout: "70%",
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          color: "#333",
+          font: { size: 12 }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.label}: ${context.parsed}%`,
+        },
+      },
+    },
+  },
+});
