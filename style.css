@@ -75,7 +75,7 @@ header {
 /* === MAIN CONTENT === */
 main {
   background: #ffffff;
-  margin-top: 100px;
+  margin-top: 0px;
   
   /* MODIFIKASI: Default state (penuh) & transisi */
   margin-left: 0;
@@ -331,7 +331,7 @@ main {
 main {
   background: #ffffff;
   overflow-x: hidden;
-  margin-top: 120px;
+  margin-top: 0px;
 }
 
 /* === STATUS CARD === */
@@ -343,6 +343,7 @@ main {
   box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
   position: relative;
   overflow: hidden;
+  padding-top: 200px;
 }
 
 .status-card .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem; }
@@ -454,14 +455,13 @@ main {
 .buy-btn:hover { background: #1e40af; }
 
 @media (min-width: 768px) {
-  main {
-    max-width: 1000px;
-    margin: 2rem auto ;
-    border-radius: 16px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    padding: 2rem;
-  }
-  .chart-container { flex-direction: row; }
+  main {
+    /* Hapus max-width, margin auto, border-radius, dan box-shadow.
+      Cukup atur margin-left agar pas di sebelah sidebar (yang lebarnya 240px).
+    */
+    margin-left: 240px; 
+  }
+  .chart-container { flex-direction: row; }
 }
 
 .habit-profile-card {
