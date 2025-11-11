@@ -19,7 +19,7 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="profile">
-    <img src="images/foto atmin.png" alt="User" class="profile-pic">
+    <img src="images/foto atmin.jpg" alt="User" class="profile-pic">
     <h3 class="username">Andi Pratama</h3>
     <p class="status">Gold Member</p>
   </div>
@@ -33,6 +33,7 @@
       <li><strong>Sisa Pulsa:</strong> Rp25.000</li>
       <li><strong>Sisa Kuota:</strong> 5.2 GB</li>
       <li><strong>Masa Aktif:</strong> 12 Nov 2025</li>
+      <li><strong>Perangkat:</strong> <span id="device-brand">Memuat...</span></li>
     </ul>
   </div>
 
@@ -69,8 +70,33 @@
       <div class="grid-item"><div class="icon">💬</div><div>Bantuan</div></div>
     </section>
 
-   <h2 class="section-title">Statistik Penggunaan</h2>
+    <h2 class="section-title">Profil Kebiasaan Anda</h2>
+    <section class="habit-profile-card">
+      <div class="habit-item">
+        <div class="habit-label">Avg. Pengeluaran</div>
+        <div class="habit-value" id="habit-spending">Rp 130.000</div>
+      </div>
+      <div class="habit-item">
+        <div class="habit-label">Kebutuhan Data</div>
+        <div class="habit-value" id="habit-data">45 GB</div>
+      </div>
+      <div class="habit-item">
+        <div class="habit-label">Aktivitas Utama</div>
+        <div class="habit-value" id="habit-activity">62% Video</div>
+      </div>
+      <div class="habit-item">
+        <div class="habit-label">Kebiasaan Top-up</div>
+        <div class="habit-value" id="habit-topup">Bulanan</div>
+      </div>
+    </section>
 
+
+<h2 class="section-title">Paket Pilihan Untuk Anda</h2>
+    <div class="package-list-wrapper">
+      <section class="package-list" id="package-list"></section>
+    </div>
+
+   <h2 class="section-title">Statistik Penggunaan</h2>
 <section class="usage-card">
   <div class="usage-info">
     <h3>Paket Aktif: <span id="activePackage">Streaming Max</span></h3>
@@ -107,12 +133,35 @@
   </div>
 </section>
 
+  <h2 class="section-title">Upgrade & Hemat!</h2>
+    <section class="comparison-card">
+      <div class="comparison-column current-plan">
+        <h3 class="comparison-title">Paket Anda Saat Ini</h3>
+        <h4 class="plan-name" id="current-plan-name">Internet Hemat 35GB</h4>
+        <ul>
+          <li><strong id="current-plan-price">Rp 130.000</strong> / bulan</li>
+          <li id="current-plan-data">Kuota Utama: 35 GB</li>
+          <li id="current-plan-bonus">Bonus: -</li>
+        </ul>
+      </div>
+      
+      <div class="comparison-column recommended-plan">
+        <div class="best-label">⭐ Pilihan Terbaik</div>
+        <h3 class="comparison-title">Rekomendasi Kami</h3>
+        <h4 class="plan-name" id="rec-plan-name">Streaming Max</h4>
+        <ul>
+          <li><strong id="rec-plan-price">Rp 125.000</strong> / bulan</li>
+          <li id="rec-plan-data">Kuota Utama: 50 GB</li>
+          <li id="rec-plan-bonus">Bonus: Unlimited Video</li>
+        </ul>
+        <div class="comparison-summary">
+          Hemat Rp 5.000 & Dapat +15 GB
+        </div>
+      </div>
+    </section>
 
 
-    <h2 class="section-title">Paket Pilihan Untuk Anda</h2>
-    <div class="package-list-wrapper">
-      <section class="package-list" id="package-list"></section>
-    </div>
+    
   </main>
 
   <script src="script.js"></script>

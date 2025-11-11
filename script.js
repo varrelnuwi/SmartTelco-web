@@ -1,32 +1,75 @@
-const userData = {
-  nama: "Andi Pratama",
-  dataUsage: 45,
-  usage: { video: 60, call: 25, sms: 15 }
+/* script.js (FILE LENGKAP DIPERBARUI) */
+
+/* ================================================================
+  BAGIAN BARU: Data Pengguna (Nantinya didapat dari Database)
+  Ini adalah data "dummy" berdasarkan kolom excel Anda.
+  ================================================================
+*/
+const currentUserData = {
+  customerId: "CUST-1001",
+  planType: "Internet Hemat 35GB", // Paket dia saat ini
+  deviceBrand: "Samsung S23",
+  avgDataUsageGb: 45,
+  penggunaanVideo: 62, // dalam persen
+  avgDurasiTelfon: 30, // dalam menit
+  sms: 15, // dalam unit
+  rata2Pengeluaran: 130000,
+  seringTopup: "Bulanan"
 };
 
+/* ================================================================
+  MODIFIKASI: Data Paket
+  Saya tambahkan 'priceNum' (angka) dan 'dataNum' (angka) 
+  agar logika perbandingan kita berfungsi.
+  ================================================================
+*/
 const allPackageOptions = [
-  { name: "Paket Streaming Max", price: "Rp 150.000", data: "50GB + Unlimited YouTube", desc: "Cocok karena 60% pemakaian Anda untuk video.", isRecommended: true },
-  { name: "Paket Hemat Bulanan", price: "Rp 100.000", data: "30GB + Bonus Sosmed", desc: "Ideal untuk penggunaan seimbang dan hemat." },
-  { name: "Paket Premium Unlimited", price: "Rp 250.000", data: "Unlimited + 20GB Hotspot", desc: "Untuk pengguna super aktif kebutuhan tinggi." },
-  { name: "Paket Gaming Boost", price: "Rp 130.000", data: "40GB + Ping Stabil", desc: "Koneksi lancar khusus untuk para gamers." },
-  { name: "Paket Malam Full", price: "Rp 80.000", data: "50GB (01.00 - 06.00)", desc: "Download sepuasnya di jam malam." },
-  { name: "Paket Harian Cepat", price: "Rp 25.000", data: "10GB 1 Hari", desc: "Untuk kebutuhan instan seharian penuh." }
+  { name: "Paket Streaming Max", price: "Rp 125.000", priceNum: 125000, data: "50GB + Unlimited YouTube", dataNum: 50, desc: "Cocok karena >50% pemakaian Anda untuk video.", isRecommended: true },
+  { name: "Paket Hemat Bulanan", price: "Rp 100.000", priceNum: 100000, data: "30GB + Bonus Sosmed", dataNum: 30, desc: "Ideal untuk penggunaan seimbang dan hemat." },
+  { name: "Paket Premium Unlimited", price: "Rp 250.000", priceNum: 250000, data: "Unlimited + 20GB Hotspot", dataNum: 999, desc: "Untuk pengguna super aktif kebutuhan tinggi." },
+  { name: "Paket Gaming Boost", price: "Rp 130.000", priceNum: 130000, data: "40GB + Ping Stabil", dataNum: 40, desc: "Koneksi lancar khusus untuk para gamers." },
+  { name: "Paket Harian Cepat", price: "Rp 25.000", priceNum: 25000, data: "10GB 1 Hari", dataNum: 10, desc: "Untuk kebutuhan instan seharian penuh." }
 ];
 
+/* ================================================================
+  BAGIAN BARU: Fungsi untuk membuat Tag Rekomendasi
+  ================================================================
+*/
+function getRecommendationTags(pkg, user) {
+  let tagsHTML = '';
+
+  // Logika 1: Tag Budget
+  // Jika harga paket <= rata-rata pengeluaran + 10rb (toleransi)
+  if (pkg.priceNum <= user.rata2Pengeluaran + 10000 && pkg.priceNum >= user.rata2Pengeluaran - 20000) {
+    tagsHTML += `<div class="rec-tag budget">✓ Sesuai Budget</div>`;
+  }
+  
+  // Logika 2: Tag Kuota
+  // Jika kuota paket > rata-rata pemakaian
+  if (pkg.dataNum > user.avgDataUsageGb) {
+    tagsHTML += `<div class="rec-tag data">✓ Kuota Cukup</div>`;
+  }
+
+  // Logika 3: Tag Aktivitas (Contoh untuk video)
+  if (pkg.name.includes("Streaming") && user.penggunaanVideo > 50) {
+    tagsHTML += `<div class="rec-tag activity">✓ Pas untuk Video</div>`;
+  }
+
+  return `<div class="recommendation-tags">${tagsHTML}</div>`;
+}
+
+
 // === Personalisasi Otomatis Berdasarkan Data Pengguna ===
+// (Fungsi ini sekarang menggunakan currentUserData)
 function personalizePackages(user) {
-  // Reset semua paket
   allPackageOptions.forEach(pkg => pkg.isRecommended = false);
 
-  // Tentukan rekomendasi berdasarkan perilaku
-  if (user.usage.video > 50) {
+  if (user.penggunaanVideo > 50 && user.avgDataUsageGb > 40) {
     markRecommended("Paket Streaming Max");
-  } else if (user.usage.call > 40) {
-    markRecommended("Paket Premium Unlimited");
-  } else if (user.usage.sms > 30) {
+  } else if (user.rata2Pengeluaran < 110000) {
     markRecommended("Paket Hemat Bulanan");
   } else {
-    markRecommended("Paket Harian Cepat");
+    markRecommended("Paket Premium Unlimited"); // Default
   }
 }
 
@@ -36,35 +79,55 @@ function markRecommended(packageName) {
 }
 
 // Jalankan personalisasi otomatis
-personalizePackages(userData);
+personalizePackages(currentUserData);
 
 
 window.onload = () => {
-  document.getElementById("user-name").textContent = userData.nama;
-  document.getElementById("dataUsage").textContent = `${50 - userData.dataUsage} GB`; 
-  document.getElementById("usage").textContent = `Terpakai: ${userData.dataUsage} dari 50 GB`;
+  // === MODIFIKASI: Mengisi data dari currentUserData ===
+  document.getElementById("user-name").textContent = "Andi Pratama"; // Anda bisa tambahkan 'nama' ke data user
+  document.getElementById("dataUsage").textContent = `${50 - currentUserData.avgDataUsageGb} GB`; 
+  document.getElementById("usage").textContent = `Terpakai: ${currentUserData.avgDataUsageGb} dari 50 GB`;
 
+  // Mengisi Kartu Profil Kebiasaan
+  document.getElementById("habit-spending").textContent = `Rp ${currentUserData.rata2Pengeluaran.toLocaleString('id-ID')}`;
+  document.getElementById("habit-data").textContent = `${currentUserData.avgDataUsageGb} GB`;
+  document.getElementById("habit-activity").textContent = `${currentUserData.penggunaanVideo}% Video`;
+  document.getElementById("habit-topup").textContent = currentUserData.seringTopup;
+  
+  // Mengisi Kartu Perbandingan
+  document.getElementById("current-plan-name").textContent = currentUserData.planType;
+  // (Anda bisa tambahkan data paket saat ini ke currentUserData untuk mengisi sisanya)
+
+
+  // === MODIFIKASI: Loop Pembuatan Carousel ===
   const carousel = document.getElementById('package-list');
-allPackageOptions.forEach(pkg => {
-  const item = document.createElement('div');
-  item.className = 'package-item';
-  if (pkg.isRecommended) item.classList.add('is-recommended');
+  allPackageOptions.forEach(pkg => {
+    const item = document.createElement('div');
+    item.className = 'package-item';
+    if (pkg.isRecommended) item.classList.add('is-recommended');
 
-  // tambahkan label "⭐ Pilihan Terbaik" kalau isRecommended = true
-  item.innerHTML = `
-    ${pkg.isRecommended ? `<div class="best-label">⭐ Pilihan Terbaik</div>` : ""}
-    <div class="details">
-      <h4>${pkg.name}</h4>
-      <p>${pkg.data}</p>
-      <p class="price">${pkg.price}/bulan</p>
-      <p style="font-size: 0.8rem; margin-top: 8px;">${pkg.desc}</p>
-    </div>
-    <button class="buy-btn">${pkg.isRecommended ? 'Pilih Paket Ini' : 'Lihat Detail'}</button>
-  `;
-  carousel.appendChild(item);
-});
+    /* ================================================================
+      MODIFIKASI: item.innerHTML sekarang memanggil 
+      getRecommendationTags(pkg, currentUserData)
+      ================================================================
+    */
+    item.innerHTML = `
+      ${pkg.isRecommended ? `<div class="best-label">⭐ Pilihan Terbaik</div>` : ""}
+      
+      ${getRecommendationTags(pkg, currentUserData)} 
+      
+      <div class="details">
+        <h4>${pkg.name}</h4>
+        <p>${pkg.data}</p>
+        <p class="price">${pkg.price}/bulan</p>
+        <p style="font-size: 0.8rem; margin-top: 8px;">${pkg.desc}</p>
+      </div>
+      <button class="buy-btn">${pkg.isRecommended ? 'Pilih Paket Ini' : 'Lihat Detail'}</button>
+    `;
+    carousel.appendChild(item);
+  });
 
-
+  // (Sisa kode carousel Anda ... )
   const items = carousel.querySelectorAll('.package-item');
   const itemCount = items.length;
   const theta = 360 / itemCount;
@@ -125,88 +188,72 @@ allPackageOptions.forEach(pkg => {
   window.addEventListener('touchmove', onDragMove);
   window.addEventListener('touchend', onDragEnd);
 
-  // Klik card → otomatis terkunci di depan
   items.forEach(item => {
     item.addEventListener('click', () => rotateToFront(item));
   });
 
   setupCarousel();
-};
 
-// === DONUT CHART: Sisa Paket ===
-const totalKuota = 50;
-const terpakai = 45;
-const sisa = totalKuota - terpakai;
+  // (Sisa kode Chart.js Anda ...)
+  // === DONUT CHART: Sisa Paket ===
+  const totalKuota = 50;
+  const terpakai = currentUserData.avgDataUsageGb; // Menggunakan data dinamis
+  const sisa = totalKuota - terpakai;
 
-const ctxDonut = document.getElementById("dataDonutChart").getContext("2d");
-new Chart(ctxDonut, {
-  type: "doughnut",
-  data: {
-    labels: ["Terpakai", "Sisa Kuota"],
-    datasets: [{
-      data: [terpakai, sisa],
-      backgroundColor: ["#ef4444", "#22c55e"], // merah = terpakai, hijau = sisa
-      borderWidth: 2,
-      hoverOffset: 10,
-    }],
-  },
-  options: {
-    cutout: "70%", // ini yang bikin jadi donut
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          color: "#333",
-          font: { size: 12 }
-        }
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => `${context.label}: ${context.parsed} GB`,
-        },
+  const ctxDonut = document.getElementById("dataDonutChart").getContext("2d");
+  new Chart(ctxDonut, {
+    type: "doughnut",
+    data: {
+      labels: ["Terpakai", "Sisa Kuota"],
+      datasets: [{
+        data: [terpakai, sisa],
+        backgroundColor: ["#ef4444", "#22c55e"],
+        borderWidth: 2,
+        hoverOffset: 10,
+      }],
+    },
+    options: {
+      cutout: "70%",
+      plugins: {
+        legend: { position: "bottom", labels: { color: "#333", font: { size: 12 }}},
+        tooltip: { callbacks: { label: (context) => `${context.label}: ${context.parsed} GB`,}},
       },
     },
-  },
-});
+  });
 
-// === DONUT CHART: Distribusi Penggunaan Paket ===
-const ctxActivity = document.getElementById("activityDonutChart").getContext("2d");
-new Chart(ctxActivity, {
-  type: "doughnut",
-  data: {
-    labels: ["Video", "TELP", "SMS"],
-    datasets: [{
-      data: [60, 25, 15],
-      backgroundColor: ["#3b82f6", "#facc15", "#a855f7"],
-      borderWidth: 2,
-      hoverOffset: 10,
-    }],
-  },
-  options: {
-    cutout: "70%",
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          color: "#333",
-          font: { size: 12 }
-        }
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => `${context.label}: ${context.parsed}%`,
-        },
+  // === DONUT CHART: Distribusi Penggunaan Paket ===
+  const ctxActivity = document.getElementById("activityDonutChart").getContext("2d");
+  new Chart(ctxActivity, {
+    type: "doughnut",
+    data: {
+      labels: ["Video", "TELP", "SMS"],
+      datasets: [{
+        data: [currentUserData.penggunaanVideo, currentUserData.avgDurasiTelfon, currentUserData.sms], // (Ini perlu disesuaikan jika data telfon/sms bukan persen)
+        backgroundColor: ["#3b82f6", "#facc15", "#a855f7"],
+        borderWidth: 2,
+        hoverOffset: 10,
+      }],
+    },
+    options: {
+      cutout: "70%",
+      plugins: {
+        legend: { position: "bottom", labels: { color: "#333", font: { size: 12 }}},
+        tooltip: { callbacks: { label: (context) => `${context.label}: ${context.parsed}%`,}},
       },
     },
-  },
-});
+  });
 
 
-const sidebar = document.getElementById('sidebar');
-const toggleBtn = document.getElementById('sidebarToggle');
-const mainContent = document.querySelector('main');
+  // (Kode Toggle Sidebar Anda ...)
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const bodyEl = document.body;
 
-sidebarToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('collapsed');
-  mainContent.classList.toggle('shifted');
-});
+  toggleBtn.addEventListener('click', () => {
+    if (window.innerWidth > 768) {
+      bodyEl.classList.toggle('sidebar-tertutup');
+    } else {
+      bodyEl.classList.toggle('sidebar-terbuka');
+    }
+  });
+
+}; // AKHIR DARI window.onload

@@ -1,3 +1,4 @@
+/* style.css (SUDAH DIPERBARUI) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 * {
@@ -62,21 +63,32 @@ header {
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   padding: 1.5rem 1rem;
   z-index: 1000;
-  transition: transform 0.4s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Saat sidebar di-hide (untuk mobile) */
-.sidebar.collapsed {
+  
+  
+  /* MODIFIKASI: Default state (tertutup) & transisi */
   transform: translateX(-100%);
+  transition: transform 0.4s ease-in-out;
 }
 
-/* Tombol toggle sidebar */
+/* === MAIN CONTENT === */
+main {
+  background: #ffffff;
+  margin-top: 100px;
+  
+  /* MODIFIKASI: Default state (penuh) & transisi */
+  margin-left: 0;
+  padding: 1.5rem;
+  transition: margin-left 0.4s ease-in-out;
+}
+
+/* === TOMBOL TOGGLE === */
 .sidebar-toggle {
   position: fixed;
   top: 85px;
+  
+  /* MODIFIKASI: Default state (posisi tertutup) & transisi */
   left: 15px;
   background: #842a3b;
   color: white;
@@ -86,20 +98,61 @@ header {
   padding: 6px 10px;
   cursor: pointer;
   z-index: 1100;
-  transition: left 0.3s ease;
+  transition: left 0.4s ease-in-out; /* Samakan durasi transisi */
 }
 
-/* Saat sidebar terbuka di mobile */
-.sidebar.active ~ .sidebar-toggle {
-  left: 260px;
-}
-
-/* Hover efek tombol */
 .sidebar-toggle:hover {
   background: #a63b50;
 }
 
-/* Sidebar Konten */
+/* === LOGIKA BUKA/TUTUP (menggunakan class di BODY) === */
+
+/* --- Untuk Desktop (min-width: 769px) --- */
+@media (min-width: 769px) {
+  /* 1. Sembunyikan Tombol di Desktop */
+  .sidebar-toggle {
+    display: none;
+  }
+  .sidebar {
+    transform: translateX(0);
+  }
+  main {
+    margin-left: 240px;
+  }
+  .sidebar-toggle {
+    left: 180px; /* 240px sidebar + 15px margin */
+  }
+
+  /* Saat di-toggle (ditutup) di desktop */
+  body.sidebar-tertutup .sidebar {
+    transform: translateX(-100%);
+  }
+  body.sidebar-tertutup .sidebar-toggle {
+    left: 15px;
+  }
+}
+
+/* --- Untuk Mobile (max-width: 768px) --- */
+@media (max-width: 768px) {
+  /* Default di mobile = TERTUTUP (sudah diatur di atas) */
+  /* 'main' margin-left tetap 0 */
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  /* Saat di-toggle (dibuka) di mobile */
+  body.sidebar-terbuka .sidebar {
+    transform: translateX(0); /* Sidebar muncul (overlay) */
+  }
+  body.sidebar-terbuka .sidebar-toggle {
+    left: 180px; /* Tombol pindah */
+  }
+  /* 'main' tidak perlu pindah, karena sidebar-nya overlay */
+}
+
+
+/* === KONTEN SIDEBAR (Tidak diubah) === */
 .profile {
   text-align: center;
 }
@@ -119,9 +172,9 @@ header {
   font-size: 0.8rem;
   color: #666;
 }
-
 .quick-info {
-  margin-top: 1.5rem;
+  margin-top: 0rem;
+  margin-bottom: 10rem;
 }
 .quick-info h4 {
   margin-bottom: 0.8rem;
@@ -138,7 +191,6 @@ header {
   margin-bottom: 0.5rem;
   color: #333;
 }
-
 .logout-btn {
   width: 100%;
   padding: 0.6rem;
@@ -154,61 +206,9 @@ header {
   background: #dc2626;
 }
 
-/* === MAIN CONTENT === */
-main {
-  background: #ffffff;
-  margin-top: 100px;
-  margin-left: 240px; /* agar tidak tertutup sidebar */
-  padding: 1.5rem;
-  transition: margin-left 0.4s ease;
-}
 
-/* Jika sidebar tertutup di mobile, konten penuh */
-.sidebar.collapsed + main {
-  margin-left: 0;
-}
-
-/* === MOBILE RESPONSIVE === */
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-
-  .sidebar.active {
-    transform: translateX(0);
-  }
-
-  .sidebar-toggle {
-    display: block;
-  }
-
-  main {
-    margin-left: 0;
-  }
-
-  .sidebar.active ~ .sidebar-toggle {
-    left: 260px;
-  }
-}
-
-@media (min-width: 769px) {
-  .sidebar {
-    transform: translateX(0);
-  }
-
-  .sidebar-toggle {
-    display: none;
-  }
-
-  main {
-    margin-left: 240px;
-  }
-}
-
-/* === USAGE CARD, PACKAGE, CHART DLL (dari CSS kamu sebelumnya, tidak diubah) === */
-/* Kamu bisa tetap lanjutkan kode usage-card, status-card, package-item, dsb di bawah sini */
-
-
+/* === SISA KODE CSS ANDA (Tidak diubah) === */
+/* ... (semua kode .usage-card, .status-card, .action-grid, .chart-container, dll. tetap di sini) ... */
 
 /* === USAGE STATISTIC CARD === */
 .usage-card {
@@ -283,6 +283,7 @@ main {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
+  
 }
 
 .package-item.is-recommended {
@@ -335,7 +336,7 @@ main {
 
 /* === STATUS CARD === */
 .status-card {
-  background: url('images/foto\ atmin.jpg') center/cover no-repeat;
+  background: url('images/foto atmin.jpg') center/cover no-repeat;
   color: white;
   border-radius: 16px;
   padding: 1.5rem;
@@ -404,6 +405,7 @@ main {
   padding: 2rem 0;
   height: 400px;
   position: relative;
+  margin-bottom: 4rem;
 }
 .package-list {
   position: relative;
@@ -417,7 +419,7 @@ main {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.2rem 1.2rem 3rem 1.2rem;
   border-radius: 16px;
   background: #fff;
   border: 1px solid #e2e8f0;
@@ -443,16 +445,160 @@ main {
   transition: background 0.3s;
   margin-top: 1.2rem;
   width: 100%;
+  position: absolute; /*  INI */
+  bottom: 1.2rem;    /*  INI */
+  left: 50%;         /*  INI */
+  transform: translateX(-50%); 
+  max-width: calc(100% - 2.4rem);
 }
 .buy-btn:hover { background: #1e40af; }
 
 @media (min-width: 768px) {
   main {
     max-width: 1000px;
-    margin: 2rem auto;
+    margin: 2rem auto ;
     border-radius: 16px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     padding: 2rem;
   }
   .chart-container { flex-direction: row; }
 }
+
+.habit-profile-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  background: #f9fafb; /* Sedikit beda dari background main */
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.habit-item {
+  text-align: center;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+.habit-label {
+  font-size: 0.85rem;
+  color: #667085; /* Abu-abu */
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.habit-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #842a3b; /* Warna tema Anda */
+}
+
+
+/* === KARTU PERBANDINGAN === */
+.comparison-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.comparison-column {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+}
+.comparison-column.current-plan {
+  background: #f9fafb; /* Sedikit redup */
+  border-style: dashed;
+}
+.comparison-column.recommended-plan {
+  border: 2px solid #842a3b; /* Highlight */
+}
+.comparison-title {
+  font-size: 1rem;
+  color: #667085;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.plan-name {
+  font-size: 1.25rem;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.comparison-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+}
+.comparison-column li {
+  margin-bottom: 0.75rem;
+  color: #444;
+}
+.comparison-column li strong {
+  font-size: 1.2rem;
+  color: #111;
+  font-weight: 700;
+}
+
+/* Label Pilihan Terbaik (digunakan ulang) */
+.comparison-column .best-label {
+  top: -12px;
+  left: 1.5rem;
+}
+
+.comparison-summary {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background: #e0fbe0; /* Hijau muda */
+  color: #1a5e1a; /* Hijau tua */
+  border: 1px solid #a3e9a3;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Responsif untuk kartu perbandingan */
+@media (max-width: 600px) {
+  .comparison-card {
+    grid-template-columns: 1fr; /* Tumpuk di mobile */
+  }
+}
+
+
+/* === TAG REKOMENDASI PADA KARTU PAKET === */
+.recommendation-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0 1.2rem; /* Samakan dengan padding kartu */
+  margin-bottom: 1rem; /* Beri jarak ke 'details' */
+}
+.rec-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: #e0e7ff; /* Biru muda */
+  color: #3730a3; /* Biru tua */
+}
+.rec-tag.budget {
+  background-color: #e0fbe0; /* Hijau muda */
+  color: #1a5e1a; /* Hijau tua */
+}
+.rec-tag.activity {
+  background-color: #fef3c7; /* Kuning muda */
+  color: #723b13; /* Coklat */
+}
+
+
+/* HAPUS MEDIA QUERY YANG KONFLIK */
+/* @media (max-width: 768px) { ... } */ /* <- Dihapus */
+/* @media (min-width: 769px) { ... } */ /* <- Dihapus */
